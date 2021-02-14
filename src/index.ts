@@ -3,12 +3,12 @@ import vision from "@google-cloud/vision";
 import multer from "multer";
 
 // Creates a client
-const upload = multer({ dest: "./upload" });
+const upload = multer({ dest: "upload" });
 const client = new vision.ImageAnnotatorClient();
 const server = express();
 
 server.post("/", upload.single("image"), async (req, res) => {
-  const [result] = await client.labelDetection("./" + req.file.filename);
+  const [result] = await client.labelDetection("upload/" + req.file.filename);
   const labels = result.labelAnnotations;
   res.json({ ...labels });
 });
